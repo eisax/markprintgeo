@@ -9,6 +9,16 @@ class AppConstants {
   // Shared Key
   static const String theme = 'theme';
 
+  //endpoints
+  static const String baseUrl = 'https://0631-41-220-25-58.ngrok-free.app';
+  static const String TOKEN = 'token';
+  static const String loginUrl = '/api/auth/signin';
+  static const String signupUrl = '/api/auth/signup';
+  static const String createSurveyUrl = '/api/survey/create-survey';
+  static const String getAllSurveysUrl = '/api/survey/fetch-all-surveys';
+  static const String getSurveyUrl = '/api/survey/fetch-survey/';
+  
+
   //colors
   static const Color color1 = Color(0xFF312F81);
   static const Color color2 = Color(0xFFFFFFFF);

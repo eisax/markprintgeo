@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:markprintgeo/controller/auth_controller.dart';
 import 'package:markprintgeo/helper/route_helper.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,9 +13,17 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  void _route() {
-    Timer(const Duration(seconds: 2), () async {
-      Get.offAllNamed(RouteHelper.auth);
+  void _route() async {
+    Timer(const Duration(microseconds: 1), () async {
+      AuthStatus authStatus = await Get.find<AuthController>().authCheck();
+
+      if (authStatus == AuthStatus.signedIn) {
+        Get.offAllNamed(RouteHelper.dashboard);
+      }
+
+      if (authStatus == AuthStatus.signedOut) {
+        Get.offAllNamed(RouteHelper.auth);
+      }
     });
   }
 

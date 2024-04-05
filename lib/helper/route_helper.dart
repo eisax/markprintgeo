@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:markprintgeo/view/screens/auth/authscreen.dart';
+import 'package:markprintgeo/view/screens/auth/widgets/signinscreen.dart';
 import 'package:markprintgeo/view/screens/auth/widgets/signupscreen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/add_survey_questions.dart';
 import 'package:markprintgeo/view/screens/createsurvey/create_survey.dart';
+import 'package:markprintgeo/view/screens/createsurvey/dashboard_screen/create_survey_bottom_tabs.dart';
 import 'package:markprintgeo/view/screens/createsurvey/view_survey.dart';
-import 'package:markprintgeo/view/screens/surveys/surveys_screen.dart';
-import 'package:markprintgeo/view/screens/queueddata/queueddata.dart';
 import 'package:markprintgeo/view/screens/survey/survey_list_screen.dart';
 import 'package:markprintgeo/view/screens/profile/profilescreen.dart';
 import 'package:markprintgeo/view/screens/splash/splashscreen.dart';
@@ -18,28 +17,24 @@ class RouteHelper {
   static const String auth = '/auth';
   static const String register = '/register';
   static const String dashboard = '/dashboard';
-
   static const String surveyslist = '/surveyslist';
   static const String addsurveyquestion = '/addsurveyquestion';
   static const String createsurvey = '/createsurvey';
   static const String profile = '/profile';
-
   static const String viewsurvey = '/viewsurvey';
+  static const String createsurveydashboard = '/createsurveydashboard';
 
   static getInitialRoute() => initial;
   static getSplashRoute() => splash;
   static getAuthRoute(String name) => '$auth?name=$name';
   static getRegisterRoute(String name) => '$register?name=$name';
   static getDashboardRoute(String name) => '$dashboard?name=$name';
-  
-
-
   static getsurveyslistRoute(String name) => '$surveyslist?name=$name';
   static getAddsurveyquestionRoute(String name) => '$addsurveyquestion?name=$name';
   static getCreatesurveyRoute(String name) => '$createsurvey?name=$name';
   static getProfileRoute(String name) => '$profile?name=$name';
-
   static getViewsurveyRoute(String name) => '$viewsurvey?name=$name';
+  static getCreateSurveyDashboardRoute(String name) => '$createsurveydashboard?name=$name';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -52,7 +47,7 @@ class RouteHelper {
     ),
     GetPage(
       name: auth,
-      page: () => const AuthScreen(),
+      page: () => const SignInScreen(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
@@ -83,6 +78,12 @@ class RouteHelper {
     GetPage(
       name: viewsurvey,
       page: () => ViewSurveyScreen(),
+      transition: Transition.cupertinoDialog,
+      transitionDuration: const Duration(milliseconds: 300),
+    ),
+    GetPage(
+      name: createsurveydashboard,
+      page: () => CreateSurveyDashboardScreen(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),

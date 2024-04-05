@@ -6,6 +6,7 @@ import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
 import 'package:markprintgeo/util/images.dart';
 import 'package:markprintgeo/view/screens/dashboard/dashboard_screen.dart';
+import 'package:markprintgeo/view/screens/shared/shared_survey_screen.dart';
 import 'package:markprintgeo/view/screens/surveys/surveys_screen.dart';
 import 'package:markprintgeo/view/screens/queueddata/queueddata.dart';
 import 'package:markprintgeo/view/screens/profile/profilescreen.dart';
@@ -21,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
     const HomeDashboardScreen(),
-    const BookmarkScreen(),
+    const SharedSurveys(),
     const QueuedDataScreen(),
     const ProfileScreen()
   ];
@@ -104,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget buildBottomCenterNavItem(IconData icon, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(RouteHelper.createsurvey);
+        Get.toNamed(RouteHelper.createsurveydashboard);
       },
       child: Container(
         width: 40,

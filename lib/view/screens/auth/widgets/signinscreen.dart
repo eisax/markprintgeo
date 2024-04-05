@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:markprintgeo/controller/auth_controller.dart';
 import 'package:markprintgeo/helper/route_helper.dart';
-import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/util/images.dart';
-import 'package:markprintgeo/util/style.dart';
-import 'package:markprintgeo/view/widgets/bouncing_scroll_physics.dart';
+import 'package:markprintgeo/view/widgets/dialog_helper.dart';
+import 'package:markprintgeo/view/widgets/loading_widget.dart';
 import 'package:markprintgeo/view/widgets/textinput_widget.dart';
+import 'package:markprintgeo/view/widgets/toaster_widget.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -25,80 +24,194 @@ class _SignInScreenState extends State<SignInScreen> {
     // TODO: implement dispose
     super.dispose();
     useremail.dispose();
+    userpass.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: Get.width,
-        
-        padding: EdgeInsets.symmetric(
-            vertical: Dimensions.paddingSizeExtraLarge,
-            horizontal: Dimensions.paddingSizeDefault),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: Get.height * 0.1,
-                  ),
-                  Text(
-                    'Create Geotagged Survey',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: AppConstants.color6,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: Dimensions.defaultSpacing,
-                  ),
-                  Text(
-                    'Simple and convinient service will help you create a survey and conduct research',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: AppConstants.color6.withOpacity(0.5),
-                        fontWeight: FontWeight.w400),
-                  )
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return GetBuilder<AuthController>(builder: (authController) {
+      return Scaffold(
+        body: Container(
+          width: Get.width,
+          height: Get.height,
+          color: Colors.white,
+          padding: EdgeInsets.only(
+              top: Get.height * 0.1,
+              left: Dimensions.paddingSizeDefault,
+              right: Dimensions.paddingSizeDefault),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: Get.width * 0.9,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      textStyle: const TextStyle(
-                          color: Colors.white, fontStyle: FontStyle.normal),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      shadowColor: Theme.of(context).primaryColor,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 30),
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Sign in Account 👍",
+                          style: TextStyle(
+                              fontSize: Dimensions.fontSizeOverLarge,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
-                    onPressed: () async {
-                      Get.offAllNamed(RouteHelper.dashboard);
-                    },
-                    child: Text(
-                      'Get Started',
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                          color: AppConstants.color2,
-                          fontWeight: FontWeight.bold),
+                    SizedBox(height: 10),
+                    Container(
+                      width: Get.width * 0.5,
+                      padding: const EdgeInsets.all(5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Let's Sign in, and start surveying",
+                          style: TextStyle(
+                              fontSize: 16, color: Theme.of(context).hintColor),
+                        ),
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 10),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: Dimensions.paddingSizeDefault),
+                      width: Get.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CustomTextField(
+                            hintText: 'email', controller: useremail,
+
+                            // errorText: "Please enter your email",
+                            borderColor: Theme.of(context).highlightColor,
+                          ),
+                          SizedBox(height: 10),
+                          CustomTextField(
+                            hintText: 'password', controller: userpass,
+                            isPassword: true,
+
+                            // errorText: "Please enter your email",
+                            borderColor: Theme.of(context).highlightColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+                Column(
+                  children: [
+                    SizedBox(
+                      width: Get.width * 0.9,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          textStyle: const TextStyle(
+                              color: Colors.white, fontStyle: FontStyle.normal),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(Dimensions.radiusSmall),
+                            ),
+                          ),
+                          shadowColor: Theme.of(context).primaryColor,
+                        ),
+                        onPressed: () async {
+                          if (useremail.text.isEmpty) {
+                            Toaster(
+                                    type: ToasterType.error,
+                                    message: 'Pleaser enter your email')
+                                .show(context);
+                          } else if (userpass.text.isEmpty) {
+                            Toaster(
+                                    type: ToasterType.error,
+                                    message: 'Pleaser enter your password')
+                                .show(context);
+                          } else {
+                            DialogHelper.showGeneralDialog(
+                              context,
+                              child: LoadingWidget(),
+                            );
+
+                            await authController
+                                .login(context,
+                                    email: useremail.text,
+                                    password: userpass.text)
+                                .then((res) => {
+                                      if (res)
+                                        {
+                                          Get.offAllNamed(
+                                              RouteHelper.dashboard),
+                                          Toaster(
+                                                  type: ToasterType.success,
+                                                  message:
+                                                      'User Authenticated Successfuly')
+                                              .show(context)
+                                        }
+                                      else
+                                        {
+                                          Toaster(
+                                                  type: ToasterType.error,
+                                                  message:
+                                                      'Wrong email or password')
+                                              .show(context)
+                                        }
+                                    });
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: Text('Sign In',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: Colors.white)),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          bottom: Dimensions.paddingSizeExtraLarge),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: TextButton(
+                          onPressed: () => Get.toNamed(
+                            RouteHelper.register,
+                          ),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Have an account?',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          color: Theme.of(context).hintColor,
+                                          fontWeight: FontWeight.w400),
+                                ),
+                                TextSpan(
+                                  text: ' Register',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -91,7 +91,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           InputDecoration(
             contentPadding: EdgeInsets.all(Dimensions.paddingSizeDefault),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+              borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               borderSide: const BorderSide(style: BorderStyle.none, width: 0),
             ),
             isDense: true,
@@ -119,17 +119,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : null,
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+              borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               borderSide: BorderSide(
-                color: Theme.of(context).dividerColor,
-                width: 0.25,
+                color: widget.borderColor ?? Theme.of(context).hintColor,
+                width: 0.5,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+              borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               borderSide: BorderSide(
                 color: widget.borderColor ?? Theme.of(context).hintColor,
-                width: .25,
+                width: .5,
               ),
             ),
             errorText: widget.errorText,

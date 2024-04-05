@@ -3,7 +3,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:markprintgeo/colors/colors.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:markprintgeo/controller/theme_controller.dart';
@@ -12,7 +11,7 @@ import 'package:markprintgeo/theme/dark_theme.dart';
 import 'package:markprintgeo/theme/light_theme.dart';
 import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/view/screens/root/no_found_screen.dart';
-import 'helper/get_di.dart' as di;
+import 'helper/di.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
           AppConstants.languages[0].languageCode!,
           AppConstants.languages[0].countryCode,
         ),
-        initialRoute: RouteHelper.auth,
+        initialRoute: RouteHelper.splash,
         getPages: RouteHelper.routes,
         unknownRoute: GetPage(
           name: '/',
