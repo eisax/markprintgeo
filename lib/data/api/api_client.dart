@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -65,7 +67,7 @@ class ApiClient extends GetxService {
     };
     var authToken = await authRepo.getAuthToken();
     if (authToken != null) {
-      _mainHeaders["Authorization"] = '$authToken';
+      _mainHeaders["Authorization"] = authToken;
     }
   }
 
@@ -85,8 +87,8 @@ class ApiClient extends GetxService {
       Response response = await handleResponse(response0);
 
       return response;
-    } catch (e, s) {
-      return Response(
+    } catch (e) {
+      return const Response(
         statusCode: 1,
         statusText: noInternetMessage,
       );
@@ -108,7 +110,7 @@ class ApiClient extends GetxService {
           )
           .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response);
-    } on Exception catch (e, s) {
+    } on Exception {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
@@ -148,7 +150,7 @@ class ApiClient extends GetxService {
       http.Response response =
           await http.Response.fromStream(await request.send());
       return handleResponse(response);
-    } on Exception catch (e, s) {
+    } on Exception {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
@@ -168,7 +170,7 @@ class ApiClient extends GetxService {
           )
           .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response);
-    } on Exception catch (e, s) {
+    } on Exception {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
@@ -187,7 +189,7 @@ class ApiClient extends GetxService {
           )
           .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response);
-    } on Exception catch (e, s) {
+    } on Exception {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
@@ -196,7 +198,9 @@ class ApiClient extends GetxService {
     dynamic body;
     try {
       body = jsonDecode(response.body);
-    } on Exception catch (e, s) {}
+    } on Exception {
+      //
+    }
     Response response0 = Response(
       body: body ?? response.body,
       bodyString: response.body.toString(),
@@ -222,13 +226,9 @@ class ApiClient extends GetxService {
             statusCode: response0.statusCode,
             body: response0.body,
             statusText: response0.body['message']);
-        var error = CustomServerException(
-            "Response status = ${response0.statusCode} message = ${response0.body['message']}");
       }
     } else if (response0.statusCode != 201 && response0.body == null) {
       response0 = const Response(statusCode: 0, statusText: noInternetMessage);
-      var error = CustomServerException(
-          "Response status = 0 message = noInternetMessage");
     }
     return response0;
   }

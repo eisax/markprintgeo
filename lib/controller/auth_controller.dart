@@ -4,9 +4,6 @@ import 'package:markprintgeo/data/api/api_client.dart';
 import 'package:markprintgeo/data/repository/auth_repo.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/helper/route_helper.dart';
-import 'package:markprintgeo/view/screens/auth/authscreen.dart';
-import 'package:markprintgeo/view/screens/auth/widgets/signinscreen.dart';
-import 'package:markprintgeo/view/screens/dashboard/dashboard_screen.dart';
 
 enum AuthStatus { signedOut, signedIn }
 
@@ -32,7 +29,6 @@ class AuthController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       Map map = response.body;
       String token = map["data"]["token"];
-      print("----------------token:${token}");
       await authRepo.saveAuthToken(token);
       _isLoading = false;
       update();

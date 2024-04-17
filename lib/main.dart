@@ -11,11 +11,10 @@ import 'package:markprintgeo/theme/dark_theme.dart';
 import 'package:markprintgeo/theme/light_theme.dart';
 import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/view/screens/root/no_found_screen.dart';
-import 'helper/di.dart' as di;
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Map<String, Map<String, String>> languages = await di.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(DevicePreview(
@@ -59,6 +58,8 @@ class MyApp extends StatelessWidget {
 }
 
 class Screen1 extends StatelessWidget {
+  const Screen1({super.key});
+
   @override
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 1; // Adjust the percentage as needed
@@ -159,6 +160,8 @@ class Screen1 extends StatelessWidget {
 }
 
 class Screen2 extends StatelessWidget {
+  const Screen2({super.key});
+
   @override
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 1; // Adjust the percentage as needed
@@ -259,6 +262,8 @@ class Screen2 extends StatelessWidget {
 }
 
 class Screen3 extends StatelessWidget {
+  const Screen3({super.key});
+
   @override
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 1; // Adjust the percentage as needed

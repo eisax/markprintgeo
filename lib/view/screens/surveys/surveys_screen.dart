@@ -1,13 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:markprintgeo/helper/route_helper.dart';
 import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
 import 'package:markprintgeo/util/images.dart';
-import 'package:markprintgeo/view/widgets/app_bar_widget.dart';
 import 'package:markprintgeo/view/widgets/bouncing_scroll_physics.dart';
-import 'package:markprintgeo/view/widgets/custom_search_widget.dart';
 
 class BookmarkScreen extends StatefulWidget {
   const BookmarkScreen({super.key});
@@ -38,7 +37,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         ), // Title
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.info,
               color: AppConstants.color2,
               size: 16,
@@ -185,7 +184,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
+                                  SizedBox(
                                     width: Get.width,
                                     child: ScrollConfiguration(
                                       behavior: BouncingScrollBehavior(),
@@ -343,7 +342,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                                                               Dimensions
                                                                   .paddingSizeExtraSmall,
                                                             ),
-                                                            child: Center(
+                                                            child: const Center(
                                                               child: Icon(
                                                                 Icons.done,
                                                                 color:
@@ -403,6 +402,6 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   }
 
   Future<void> _pullRefresh() async {
-    print("------------------------REFRESHED-----------------");
+   // print("------------------------REFRESHED-----------------");
   }
 }

@@ -1,15 +1,13 @@
 
 import 'package:get/get.dart';
-import 'package:markprintgeo/view/screens/auth/authscreen.dart';
+import 'package:markprintgeo/view/screens/mainnavigation/navigation_bar_screen.dart';
 import 'package:markprintgeo/view/screens/auth/widgets/signinscreen.dart';
 import 'package:markprintgeo/view/screens/auth/widgets/signupscreen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/create_survey.dart';
+import 'package:markprintgeo/view/screens/createsurvey/createsurvey/create_survey_screen.dart';
 import 'package:markprintgeo/view/screens/createsurvey/dashboard_screen/create_survey_bottom_tabs.dart';
-import 'package:markprintgeo/view/screens/createsurvey/view_survey.dart';
 import 'package:markprintgeo/view/screens/survey/survey_list_screen.dart';
-import 'package:markprintgeo/view/screens/profile/profilescreen.dart';
+import 'package:markprintgeo/view/screens/more/more_screen.dart';
 import 'package:markprintgeo/view/screens/splash/splashscreen.dart';
-import 'package:markprintgeo/view/widgets/navigation_bar.dart';
 
 class RouteHelper {
   static const String initial = '/';
@@ -21,7 +19,7 @@ class RouteHelper {
   static const String addsurveyquestion = '/addsurveyquestion';
   static const String createsurvey = '/createsurvey';
   static const String profile = '/profile';
-  static const String viewsurvey = '/viewsurvey';
+
   static const String createsurveydashboard = '/createsurveydashboard';
 
   static getInitialRoute() => initial;
@@ -33,7 +31,6 @@ class RouteHelper {
   static getAddsurveyquestionRoute(String name) => '$addsurveyquestion?name=$name';
   static getCreatesurveyRoute(String name) => '$createsurvey?name=$name';
   static getProfileRoute(String name) => '$profile?name=$name';
-  static getViewsurveyRoute(String name) => '$viewsurvey?name=$name';
   static getCreateSurveyDashboardRoute(String name) => '$createsurveydashboard?name=$name';
 
   static List<GetPage> routes = [
@@ -59,7 +56,7 @@ class RouteHelper {
     ),
     GetPage(
       name: dashboard,
-      page: () => DashboardScreen(),
+      page: () => MainNavigationBar(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
@@ -75,12 +72,7 @@ class RouteHelper {
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
-    GetPage(
-      name: viewsurvey,
-      page: () => ViewSurveyScreen(),
-      transition: Transition.cupertinoDialog,
-      transitionDuration: const Duration(milliseconds: 300),
-    ),
+    
     GetPage(
       name: createsurveydashboard,
       page: () => CreateSurveyDashboardScreen(),

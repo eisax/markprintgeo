@@ -1,5 +1,6 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
 
@@ -8,7 +9,7 @@ class MultipleSelectWidget extends StatefulWidget {
   final String selectedWidget;
   final ValueChanged<String> onSelectionChanged;
 
-  MultipleSelectWidget({
+  const MultipleSelectWidget({super.key, 
     required this.selectionWidgetList,
     required this.selectedWidget,
     required this.onSelectionChanged,
@@ -35,7 +36,7 @@ class _MultipleSelectWidgetState extends State<MultipleSelectWidget> {
               setState(() {
                 tappedIndex = index;
               });
-              Future.delayed(Duration(milliseconds: 10), () {
+              Future.delayed(const Duration(milliseconds: 10), () {
                 setState(() {
                   tappedIndex = -1;
                 });
@@ -46,10 +47,10 @@ class _MultipleSelectWidgetState extends State<MultipleSelectWidget> {
               }
             },
             child: AnimatedContainer(
-              padding: EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               margin: EdgeInsets.symmetric(
                   vertical: Dimensions.paddingSizeExtraSmall),
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).dividerColor.withOpacity(0.25),
@@ -68,7 +69,7 @@ class _MultipleSelectWidgetState extends State<MultipleSelectWidget> {
                 ],
               ),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Center(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +91,7 @@ class _MultipleSelectWidgetState extends State<MultipleSelectWidget> {
                             alignment: Alignment.center,
                             children: [
                               if (isSelected)
-                                Icon(
+                                const Icon(
                                   Icons.done,
                                   size: 12,
                                   color: Colors.white,

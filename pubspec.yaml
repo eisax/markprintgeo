@@ -23,6 +23,7 @@ dependencies:
   shimmer: ^3.0.0
   connectivity_plus: ^2.3.8
   dio: ^5.4.1
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:

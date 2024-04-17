@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/controller/auth_controller.dart';
@@ -27,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  @override
   void initState() {
     super.initState();
     _route();
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
         width: Get.width,
         height: Get.height,
         color: Theme.of(context).cardColor,
-        child: Center(
+        child: const Center(
           child: Text("markprintgeo"),
         ),
       ),

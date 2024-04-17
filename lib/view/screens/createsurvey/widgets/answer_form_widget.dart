@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/controller/survey_controller.dart';
@@ -37,7 +39,7 @@ class _AnswerInputTemplateState extends State<AnswerInputTemplate> {
                 color: Theme.of(context).shadowColor.withOpacity(0.2),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           color: AppConstants.color2,
@@ -202,25 +204,23 @@ class _AnswerInputTemplateState extends State<AnswerInputTemplate> {
                                 //     questionid: question.id,
                                 //     answer: "Add answer");
                               },
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: AppConstants.color10,
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      "Add answer",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium
-                                          ?.copyWith(
-                                              color: AppConstants.color10,
-                                              fontWeight: FontWeight.w400),
-                                    ),
-                                  ],
-                                ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.add,
+                                    color: AppConstants.color10,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    "Add answer",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(
+                                            color: AppConstants.color10,
+                                            fontWeight: FontWeight.w400),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -235,118 +235,5 @@ class _AnswerInputTemplateState extends State<AnswerInputTemplate> {
     });
   }
 
-  void _showConfirmationDialog(
-    BuildContext context,
-    String message,
-    Function onConfirm,
-  ) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.zero,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          content:
-              SingleChildScrollView(child: _DialogWidget(context, onConfirm)),
-        );
-      },
-    );
-  }
 
-  Widget _DialogWidget(BuildContext context, Function onConfirm) {
-    return Container(
-      padding: EdgeInsets.all(Dimensions.paddingSizeLarge),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
-          color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "Are you sure you want to delete?",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-          SizedBox(
-            height: Dimensions.paddingSizeLarge,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      textStyle: const TextStyle(
-                          color: Colors.white, fontStyle: FontStyle.normal),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            width: 0.5, color: Theme.of(context).primaryColor),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(Dimensions.radiusDefault),
-                        ),
-                      ),
-                      shadowColor: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: () async {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Cancel",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: Theme.of(context).primaryColor),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: Dimensions.paddingSizeSmall,
-              ),
-              SizedBox(
-                width: Dimensions.paddingSizeSmall,
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      textStyle: const TextStyle(
-                          color: Colors.white, fontStyle: FontStyle.normal),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(Dimensions.radiusDefault),
-                        ),
-                      ),
-                      shadowColor: Theme.of(context).primaryColor,
-                    ),
-                    onPressed: () async {
-                      onConfirm();
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Delete",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall
-                          ?.copyWith(color: AppConstants.color2),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 }

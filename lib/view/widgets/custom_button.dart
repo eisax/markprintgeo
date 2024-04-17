@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:markprintgeo/helper/route_helper.dart';
-import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/util/style.dart';
 
 class CustomButton extends StatelessWidget {
   final void Function() onPressed;
@@ -46,7 +43,7 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
         ),
       ),
     );

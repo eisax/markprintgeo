@@ -52,80 +52,95 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).primaryColor,
                           ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: Dimensions.paddingSizeExtraLarge,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.paddingSizeExtraSmall),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: Dimensions.paddingSizeSmall,
-                                    ),
-                                    CustomTextField(
-                                      controller: title,
-                                      hintText: "title",
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(color: Colors.white),
-                                      borderColor: Colors.white,
-                                      fillColor: Colors.transparent,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            surveyController.mysurvey.title =
-                                                newValue;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ],
+                          child: Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: Dimensions.paddingSizeExtraLarge,
                                 ),
-                              ),
-                              SizedBox(
-                                height: Dimensions.paddingSizeExtraSmall,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.paddingSizeExtraSmall),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: Dimensions.paddingSizeSmall,
-                                    ),
-                                    CustomTextField(
-                                      controller: description,
-                                      hintText: "description",
-                                      fillColor: Colors.transparent,
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.copyWith(color: Colors.white),
-                                      borderColor: Colors.white,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          if (newValue != null) {
-                                            surveyController.mysurvey.description =
-                                                newValue;
-                                          }
-                                        });
-                                      },
-                                    ),
-                                  ],
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.paddingSizeExtraSmall),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: Dimensions.paddingSizeSmall,
+                                      ),
+                                      CustomTextField(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: Colors.white,
+                                          decoration: TextDecoration.none,
+                                          textBaseline: null,
+                                          
+                                        ),
+                                        controller: title,
+                                        hintText: "title",
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(color: Colors.white.withOpacity(0.5)),
+                                        borderColor: Colors.white,
+                                        fillColor: Colors.transparent,
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            if (newValue != null) {
+                                              surveyController.mysurvey.title =
+                                                  newValue;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: Dimensions.paddingSizeDefault,
-                              ),
-                            ],
+                                SizedBox(
+                                  height: Dimensions.paddingSizeExtraSmall,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.paddingSizeExtraSmall),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: Dimensions.paddingSizeSmall,
+                                      ),
+                                      CustomTextField(
+                                        textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: Colors.white,
+                                          decoration: TextDecoration.none,
+                                          textBaseline: null,
+                                          
+                                        ),
+                                        controller: description,
+                                        hintText: "description",
+                                        fillColor: Colors.transparent,
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.copyWith(color: Colors.white),
+                                        borderColor: Colors.white,
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            if (newValue != null) {
+                                              surveyController.mysurvey.description =
+                                                  newValue;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.paddingSizeDefault,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

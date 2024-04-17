@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/controller/survey_controller.dart';
@@ -360,11 +362,11 @@ class _QuestionInputTemplateState extends State<QuestionInputTemplate> {
                                   .asMap()
                                   .entries
                                   .map((answer) {
-                                widget.question.answers.forEach((_) {
+                                for (var _ in widget.question.answers) {
                                   widget.answercontrollers.add(
                                     TextEditingController(),
                                   );
-                                });
+                                }
 
                                 return SizedBox(
                                   width: Get.width,
@@ -406,7 +408,7 @@ class _QuestionInputTemplateState extends State<QuestionInputTemplate> {
                                           ),
                                           AnimatedContainer(
                                             duration:
-                                                Duration(milliseconds: 200),
+                                                const Duration(milliseconds: 200),
                                             child: GestureDetector(
                                               onTap: () {
                                                 // _deleteAnswer(
@@ -437,25 +439,23 @@ class _QuestionInputTemplateState extends State<QuestionInputTemplate> {
                                 //     questionid: question.id,
                                 //     answer: "Add answer");
                               },
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.add,
-                                      color: AppConstants.color10,
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      "Add answer",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium
-                                          ?.copyWith(
-                                              color: AppConstants.color10,
-                                              fontWeight: FontWeight.w400),
-                                    ),
-                                  ],
-                                ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.add,
+                                    color: AppConstants.color10,
+                                    size: 16,
+                                  ),
+                                  Text(
+                                    "Add answer",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium
+                                        ?.copyWith(
+                                            color: AppConstants.color10,
+                                            fontWeight: FontWeight.w400),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

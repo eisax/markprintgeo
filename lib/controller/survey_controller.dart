@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:markprintgeo/data/api/api_client.dart';
 import 'package:markprintgeo/data/model/response/survey.dart';
-import 'package:markprintgeo/data/repository/auth_repo.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/data/repository/survey_repo.dart';
-import 'package:markprintgeo/view/widgets/toaster_widget.dart';
+import 'package:markprintgeo/view/widgets/dialog_helper.dart';
+import 'package:markprintgeo/view/widgets/error_widget.dart';
 
 class SurveyController extends GetxController implements GetxService {
   SurveyRepo surveyRepo;
@@ -39,9 +38,7 @@ class SurveyController extends GetxController implements GetxService {
   }
 
   void addQuestion(String questionType) {
-    if (_mysurvey.questions == null) {
-      _mysurvey.questions = [];
-    }
+    _mysurvey.questions ??= [];
 
     _mysurvey.questions?.add(
       Question(
@@ -86,15 +83,33 @@ class SurveyController extends GetxController implements GetxService {
     update();
 
     if (_mysurvey.title == null || _mysurvey.title!.isEmpty) {
-      Toaster(type: ToasterType.error, message: 'Enter Survey title')
-          .show(context);
+      DialogHelper.showGeneralDialog(
+          context,
+          child: GestureDetector(
+            onTap: () => Get.back(),
+            child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+               ErrorWarningWidget(title: 'Title is Required', subtitle: 'Please enter form title before submitting', onTap: () { Get.back(); },)
+              ],
+            ),
+          ),
+        );
 
       return false;
     } else if (isAnyQuestionEmpty) {
-      Toaster(
-              type: ToasterType.error,
-              message: 'Finish setting up your questions')
-          .show(context);
+      DialogHelper.showGeneralDialog(
+          context,
+          child: GestureDetector(
+            onTap: () => Get.back(),
+            child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+               ErrorWarningWidget(title: 'Questions are Required', subtitle: 'Please add questions before you proceed', onTap: () { Get.back(); },)
+              ],
+            ),
+          ),
+        );
       return false;
     }
 

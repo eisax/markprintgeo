@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/util/style.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -24,6 +22,7 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final Color? borderColor;
   final List<TextInputFormatter>? inputFormatter;
+  final TextStyle? textStyle;
 
   const CustomTextField({
     super.key,
@@ -45,7 +44,7 @@ class CustomTextField extends StatefulWidget {
     this.errorText,
     this.fillColor,
     this.borderColor,
-    this.inputFormatter,
+    this.inputFormatter,  this.textStyle,
   });
 
   @override
@@ -61,7 +60,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       maxLines: widget.maxLines,
       controller: widget.controller,
       focusNode: widget.focusNode,
-      style: Theme.of(context).textTheme.labelMedium,
+      style:widget.textStyle?? Theme.of(context).textTheme.labelMedium,
       textInputAction: widget.inputAction,
       keyboardType: widget.inputType,
       cursorColor: Theme.of(context).primaryColor,

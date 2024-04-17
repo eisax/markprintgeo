@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 enum ToasterType { error, success }
 
@@ -24,7 +23,7 @@ class Toaster {
         break;
     }
 
-    final overlay = Overlay.of(context)!;
+    final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
         bottom: MediaQuery.of(context).size.height * 0.1,
@@ -33,7 +32,7 @@ class Toaster {
         child: SafeArea(
           child: Center(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 color: backgroundColor,
                 borderRadius: BorderRadius.circular(10),
@@ -54,7 +53,7 @@ class Toaster {
     overlay.insert(overlayEntry);
 
     // Remove the toaster after 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       overlayEntry.remove();
     });
   }

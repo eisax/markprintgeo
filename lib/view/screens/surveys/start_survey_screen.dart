@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -27,7 +25,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
   Map<int, TextEditingController> responsesControllers = {};
   List<QuestionModel> questions = [];
   String selectedValue = '';
-  List<File> _images = [];
+  final List<File> _images = [];
   String locationUsed = "GPS";
   bool isLocationGenerated = false;
   Placemark? placemark;
@@ -69,7 +67,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
       Placemark placemark = placemarks[0];
       return placemark;
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
       return null;
     }
   }
@@ -129,11 +127,6 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
     ];
   }
 
-  void _addQuestion(QuestionModel question) async {
-    setState(() {
-      questions.add(question);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +143,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: AppConstants.color2,
             size: 16,
@@ -170,7 +163,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
         ), // Title
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_forward_ios_sharp,
               color: AppConstants.color2,
               size: 16,
@@ -194,7 +187,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
             child: Column(
               children: [
                 //header
-                Container(
+                SizedBox(
                   width: Get.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,18 +195,17 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                     children: [
                       Expanded(
                         child: SingleSelectWidget(
-                          selectionWidgetList: ["GPS", "Manual"],
+                          selectionWidgetList: const ["GPS", "Manual"],
                           onSelectionChanged: (value) {
                             setState(() {
                               locationUsed = value;
                             });
 
-                            print(locationUsed);
                           },
                           selectedWidget: locationUsed,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: Dimensions.defaultSpacing,
                       ),
                       Column(
@@ -230,12 +222,8 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                                 setState(()  {
                                   placemark;
                                 });
-                                print(
-                                    "---------------> location generation success");
                               } catch (e) {
-                                print(e.toString());
-                                print(
-                                    "---------------> location generation failed");
+                                //
                               }
                             },
                             child: Container(
@@ -266,7 +254,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                                             ? Colors.green
                                             : Colors.red),
                                   ),
-                                  SizedBox(
+                                 const SizedBox(
                                     width: Dimensions.defaultSpacing,
                                   ),
                                   Text(
@@ -291,14 +279,14 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: Dimensions.defaultSpacing,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: Dimensions.defaultSpacing,
                 ),
                 //custombody
-                Container(
+                SizedBox(
                   width: Get.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,7 +328,7 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: Dimensions.paddingSizeSmall),
-                              child: Container(
+                              child: SizedBox(
                                 child: SizedBox(
                                   width: Get.width,
                                   child: SingleSelectWidget(
@@ -381,8 +369,9 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                             ),
                           ],
                         );
-                      } else
+                      } else {
                         return Container();
+                      }
                     }).toList(),
                   ),
                 ),
@@ -390,55 +379,78 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                   height: Dimensions.paddingSizeLarge,
                 ),
                 //footer
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          "Photo",
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(color: AppConstants.color5),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.paddingSizeDefault,
-                      ),
-                      Container(
-                        width: Get.width,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: _images
-                                .map(
-                                  (image) => Container(
-                                    padding: EdgeInsets.all(
-                                        Dimensions.paddingSizeExtraSmall),
-                                    margin: EdgeInsets.all(
-                                      Dimensions.paddingSizeExtraSmall,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: FileImage(image),
-                                          fit: BoxFit.cover,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Photo",
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge
+                          ?.copyWith(color: AppConstants.color5),
+                    ),
+                    SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    SizedBox(
+                      width: Get.width,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: _images
+                              .map(
+                                (image) => Container(
+                                  padding: EdgeInsets.all(
+                                      Dimensions.paddingSizeExtraSmall),
+                                  margin: EdgeInsets.all(
+                                    Dimensions.paddingSizeExtraSmall,
+                                  ),
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: FileImage(image),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimensions.radiusDefault),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          width: 0.2,
+                                          color: Theme.of(context)
+                                              .dividerColor)),
+                                  height: Get.width * 0.3,
+                                  width: Get.width * 0.3,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        padding: const EdgeInsets.all(
+                                          2,
                                         ),
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radiusDefault),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            width: 0.2,
-                                            color: Theme.of(context)
-                                                .dividerColor)),
-                                    height: Get.width * 0.3,
-                                    width: Get.width * 0.3,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .hintColor
+                                              .withOpacity(0.5),
+                                          borderRadius: BorderRadius.circular(
+                                            Dimensions.paddingSizeExtraSmall,
+                                          ),
+                                        ),
+                                        child: const Icon(
+                                          Icons.image_outlined,
+                                          size: 16,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            Dimensions.paddingSizeExtraSmall,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _deleteImage(image);
+                                        },
+                                        child: Container(
                                           padding: const EdgeInsets.all(
                                             2,
                                           ),
@@ -446,149 +458,122 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
                                             color: Theme.of(context)
                                                 .hintColor
                                                 .withOpacity(0.5),
-                                            borderRadius: BorderRadius.circular(
-                                              Dimensions.paddingSizeExtraSmall,
+                                            borderRadius:
+                                                BorderRadius.circular(
+                                              Dimensions
+                                                  .paddingSizeExtraSmall,
                                             ),
                                           ),
                                           child: const Icon(
-                                            Icons.image_outlined,
+                                            Icons.delete_outline,
                                             size: 16,
                                             color: Colors.white,
                                           ),
                                         ),
-                                        SizedBox(
-                                          width:
-                                              Dimensions.paddingSizeExtraSmall,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            _deleteImage(image);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(
-                                              2,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .hintColor
-                                                  .withOpacity(0.5),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                Dimensions
-                                                    .paddingSizeExtraSmall,
-                                              ),
-                                            ),
-                                            child: const Icon(
-                                              Icons.delete_outline,
-                                              size: 16,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        )
-                                      ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                            width: 0.2,
+                            color: Theme.of(context).dividerColor),
+                        borderRadius: BorderRadius.circular(
+                          Dimensions.radiusDefault,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 40,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor: Colors.transparent,
+                                  textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontStyle: FontStyle.normal),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        width: 0.5,
+                                        color:
+                                            Theme.of(context).primaryColor),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(Dimensions.radiusSmall),
                                     ),
                                   ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.paddingSizeDefault,
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              width: 0.2,
-                              color: Theme.of(context).dividerColor),
-                          borderRadius: BorderRadius.circular(
-                            Dimensions.radiusDefault,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 40,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor: Colors.transparent,
-                                    textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal),
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(
-                                          width: 0.5,
+                                  shadowColor: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () async {
+                                  await _pickImage(false);
+                                },
+                                child: Text(
+                                  "Album",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(
                                           color:
                                               Theme.of(context).primaryColor),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(Dimensions.radiusSmall),
-                                      ),
-                                    ),
-                                    shadowColor: Theme.of(context).primaryColor,
-                                  ),
-                                  onPressed: () async {
-                                    await _pickImage(false);
-                                  },
-                                  child: Text(
-                                    "Album",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(
-                                            color:
-                                                Theme.of(context).primaryColor),
-                                  ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: Dimensions.paddingSizeSmall,
-                            ),
-                            Expanded(
-                              child: SizedBox(
-                                height: 40,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    textStyle: const TextStyle(
-                                        color: Colors.white,
-                                        fontStyle: FontStyle.normal),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimensions.radiusSmall),
-                                      ),
+                          ),
+                          SizedBox(
+                            width: Dimensions.paddingSizeSmall,
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 40,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontStyle: FontStyle.normal),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(Dimensions.radiusSmall),
                                     ),
-                                    shadowColor: Theme.of(context).primaryColor,
                                   ),
-                                  onPressed: () async {
-                                    await _pickImage(true);
-                                  },
-                                  child: Text(
-                                    "Camera",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(color: AppConstants.color2),
-                                  ),
+                                  shadowColor: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () async {
+                                  await _pickImage(true);
+                                },
+                                child: Text(
+                                  "Camera",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(color: AppConstants.color2),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: Dimensions.paddingSizeDefault,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.paddingSizeDefault,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -616,7 +601,6 @@ class _StartSurveyScreenState extends State<StartSurveyScreen> {
               shadowColor: Theme.of(context).primaryColor,
             ),
             onPressed: () async {
-              print(placemark.toString());
               // List<String> nonEmptyAnswers = responsesControllers.values
               //     .map((controller) => controller.text)
               //     .where((answer) => answer.isNotEmpty)

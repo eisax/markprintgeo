@@ -8,4 +8,8 @@ class Images {
   static const String profile = 'assets/images/icons/profile.svg';
   static const String cry = 'assets/images/icons/cry.svg';
   static const String smile = 'assets/images/icons/smile.svg';
+  static const String notepad = 'assets/images/icons/notepad.svg';
+
+  //STATIC IMAGES
+  static const String writing = 'assets/images/writing.jpg';
 }
