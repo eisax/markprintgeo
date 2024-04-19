@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/controller/survey_controller.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/view/screens/createsurvey/createsurvey/create_survey_screen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/createsurveytheme/create_survey_theme_screen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/dashboard_screen/widget/question_type_dialog.dart';
-import 'package:markprintgeo/view/screens/createsurvey/previewsurvey/preview_survey.dart';
-import 'package:markprintgeo/view/screens/createsurvey/survey_settings/survey_settings_screen.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveycreate/create_survey_screen.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveytheme/create_survey_theme_screen.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveydashboard/widget/question_type_dialog.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveypreview/preview_survey.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveysettings/survey_settings_screen.dart';
 
 
 class CreateSurveyDashboardScreen extends StatefulWidget {

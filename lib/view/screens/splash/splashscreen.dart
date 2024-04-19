@@ -13,7 +13,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void _route() async {
-    Timer(const Duration(microseconds: 1), () async {
+    Timer(const Duration(microseconds: 10), () async {
+       Get.offAllNamed(RouteHelper.auth);
       AuthStatus authStatus = await Get.find<AuthController>().authCheck();
 
       if (authStatus == AuthStatus.signedIn) {

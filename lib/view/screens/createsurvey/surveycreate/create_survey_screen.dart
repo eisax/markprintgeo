@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:markprintgeo/controller/survey_controller.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
 import 'package:markprintgeo/view/screens/createsurvey/widgets/question_form_widget.dart';
+import 'package:markprintgeo/view/screens/createsurvey/widgets/question_input_form_widget.dart';
 import 'package:markprintgeo/view/widgets/bouncing_scroll_physics.dart';
+import 'package:markprintgeo/view/widgets/dialog_helper.dart';
 import 'package:markprintgeo/view/widgets/textinput_widget.dart';
 
 class CreateSurveyScreen extends StatefulWidget {
@@ -34,7 +36,7 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
     return GetBuilder<SurveyController>(builder: (surveyController) {
       return Scaffold(
         backgroundColor: Theme.of(context).cardColor,
-        body: Container(
+        body: SizedBox(
           child: Column(
             children: [
               Expanded(
@@ -53,7 +55,8 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                             color: Theme.of(context).primaryColor,
                           ),
                           child: Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.paddingSizeSmall),
                             child: Column(
                               children: [
                                 SizedBox(
@@ -64,24 +67,29 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                                       horizontal:
                                           Dimensions.paddingSizeExtraSmall),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: Dimensions.paddingSizeSmall,
                                       ),
                                       CustomTextField(
-                                        textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: Colors.white,
-                                          decoration: TextDecoration.none,
-                                          textBaseline: null,
-                                          
-                                        ),
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              decoration: TextDecoration.none,
+                                              textBaseline: null,
+                                            ),
                                         controller: title,
                                         hintText: "title",
                                         hintStyle: Theme.of(context)
                                             .textTheme
                                             .bodySmall
-                                            ?.copyWith(color: Colors.white.withOpacity(0.5)),
+                                            ?.copyWith(
+                                                color: Colors.white
+                                                    .withOpacity(0.5)),
                                         borderColor: Colors.white,
                                         fillColor: Colors.transparent,
                                         onChanged: (String? newValue) {
@@ -104,18 +112,21 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                                       horizontal:
                                           Dimensions.paddingSizeExtraSmall),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: Dimensions.paddingSizeSmall,
                                       ),
                                       CustomTextField(
-                                        textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                          color: Colors.white,
-                                          decoration: TextDecoration.none,
-                                          textBaseline: null,
-                                          
-                                        ),
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                              decoration: TextDecoration.none,
+                                              textBaseline: null,
+                                            ),
                                         controller: description,
                                         hintText: "description",
                                         fillColor: Colors.transparent,
@@ -127,8 +138,8 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                                         onChanged: (String? newValue) {
                                           setState(() {
                                             if (newValue != null) {
-                                              surveyController.mysurvey.description =
-                                                  newValue;
+                                              surveyController.mysurvey
+                                                  .description = newValue;
                                             }
                                           });
                                         },
@@ -155,9 +166,26 @@ class _CreateSurveyScreenState extends State<CreateSurveyScreen> {
                                     .asMap()
                                     .entries
                                     .map((question) {
-                              return QuestionInputTemplate(
-                                answercontrollers: answercontrollers,
-                                question: question.value,
+                              return GestureDetector(
+                                onTap: () {
+                                  DialogHelper.showGeneralDialog(
+                                    context,
+                                    child: GestureDetector(
+                                      onTap: () => Get.back(),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          QuestionFormInputTemplate(
+                                            question: question.value,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: QuestionInputTemplate(
+                                  question: question.value,
+                                ),
                               );
                             }).toList()),
                           ),

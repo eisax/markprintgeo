@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/controller/survey_controller.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/view/screens/createsurvey/dashboard_screen/widget/clickable_title_button.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveydashboard/widget/clickable_title_button.dart';
 
 
 class BottomQuestionDialogHelper {

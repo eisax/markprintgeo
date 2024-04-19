@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
-import 'package:markprintgeo/view/screens/createsurvey/survey_settings/widget/collaborate_settings_widget.dart';
-import 'package:markprintgeo/view/screens/createsurvey/survey_settings/widget/control_settings_widget.dart';
-import 'package:markprintgeo/view/screens/createsurvey/survey_settings/widget/view_settings_widget.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveysettings/widget/collaborate_settings_widget.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveysettings/widget/control_settings_widget.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveysettings/widget/view_settings_widget.dart';
 
 class SurveySettingsScreen extends StatefulWidget {
   const SurveySettingsScreen({super.key});

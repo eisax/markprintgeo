@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:markprintgeo/view/screens/mainnavigation/navigation_bar_screen.dart';
 import 'package:markprintgeo/view/screens/auth/widgets/signinscreen.dart';
 import 'package:markprintgeo/view/screens/auth/widgets/signupscreen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/createsurvey/create_survey_screen.dart';
-import 'package:markprintgeo/view/screens/createsurvey/dashboard_screen/create_survey_bottom_tabs.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveycreate/create_survey_screen.dart';
+import 'package:markprintgeo/view/screens/createsurvey/surveydashboard/create_survey_bottom_tabs.dart';
 import 'package:markprintgeo/view/screens/survey/survey_list_screen.dart';
 import 'package:markprintgeo/view/screens/more/more_screen.dart';
 import 'package:markprintgeo/view/screens/splash/splashscreen.dart';
@@ -19,7 +19,6 @@ class RouteHelper {
   static const String addsurveyquestion = '/addsurveyquestion';
   static const String createsurvey = '/createsurvey';
   static const String profile = '/profile';
-
   static const String createsurveydashboard = '/createsurveydashboard';
 
   static getInitialRoute() => initial;
@@ -56,26 +55,26 @@ class RouteHelper {
     ),
     GetPage(
       name: dashboard,
-      page: () => MainNavigationBar(),
+      page: () => const MainNavigationBar(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
     GetPage(
       name: createsurvey,
-      page: () => CreateSurveyScreen(),
+      page: () => const CreateSurveyScreen(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
     GetPage(
       name: profile,
-      page: () => ProfileScreen(),
+      page: () => const ProfileScreen(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),
     
     GetPage(
       name: createsurveydashboard,
-      page: () => CreateSurveyDashboardScreen(),
+      page: () => const CreateSurveyDashboardScreen(),
       transition: Transition.cupertinoDialog,
       transitionDuration: const Duration(milliseconds: 300),
     ),

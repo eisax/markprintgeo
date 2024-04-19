@@ -23,11 +23,13 @@ class CustomTextField extends StatefulWidget {
   final Color? borderColor;
   final List<TextInputFormatter>? inputFormatter;
   final TextStyle? textStyle;
+  final EdgeInsetsGeometry? contentPadding;
 
   const CustomTextField({
     super.key,
     this.hintText = 'Write something...',
     required this.controller,
+    this.contentPadding,
     this.focusNode,
     this.nextFocus,
     this.isEnabled = true,
@@ -88,7 +90,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               : null),
       decoration: widget.inputDecoration ??
           InputDecoration(
-            contentPadding: EdgeInsets.all(Dimensions.paddingSizeDefault),
+            contentPadding:widget.contentPadding?? EdgeInsets.all(Dimensions.paddingSizeDefault),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
               borderSide: const BorderSide(style: BorderStyle.none, width: 0),

@@ -20,23 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isProfilesed = false;
   bool rememberMe = false;
   String? selectedLanguage;
-  final profileTypes = [
-    "My profile",
-    "Notifications",
-    "My address",
-    "Help",
-    "Privacy policy",
-    "Logout"
-  ];
+  
 
-  final IconData = [
-    Icons.person,
-    Icons.notifications,
-    Icons.location_on,
-    Icons.help,
-    Icons.privacy_tip,
-    Icons.logout
-  ];
 
   @override
   Widget build(BuildContext context) {

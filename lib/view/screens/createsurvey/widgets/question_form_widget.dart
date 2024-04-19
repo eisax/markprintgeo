@@ -6,16 +6,17 @@ import 'package:markprintgeo/controller/survey_controller.dart';
 import 'package:markprintgeo/data/model/response/survey.dart';
 import 'package:markprintgeo/util/app_constants.dart';
 import 'package:markprintgeo/util/dimensiona.dart';
+import 'package:markprintgeo/view/widgets/custom_switch.dart';
 import 'package:markprintgeo/view/widgets/textinput_widget.dart';
 
 class QuestionInputTemplate extends StatefulWidget {
   final Question question;
 
   bool isrequired;
-  List<TextEditingController> answercontrollers;
+  // List<TextEditingController> answercontrollers;
   QuestionInputTemplate({
     super.key,
-    required this.answercontrollers,
+    // required this.answercontrollers,
     this.isrequired = false,
     required this.question,
   });
@@ -32,438 +33,532 @@ class _QuestionInputTemplateState extends State<QuestionInputTemplate> {
     return GetBuilder<SurveyController>(builder: (surveyController) {
       return Container(
         margin: EdgeInsets.symmetric(vertical: Dimensions.paddingSizeDefault),
+        padding: EdgeInsets.symmetric(
+          horizontal: Dimensions.paddingSizeSmall,
+          vertical: Dimensions.paddingSizeDefault,
+        ),
         width: Get.width,
         decoration: BoxDecoration(
-          color: AppConstants.color2,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: Theme.of(context).dividerColor.withOpacity(0.1),
             width: 0.25,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).shadowColor.withOpacity(0.2),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(Dimensions.paddingSizeSmall),
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: 0.25, color: Theme.of(context).dividerColor))),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${widget.question.question.indexOf(widget.question.question) + 1}.  ${widget.question.question}",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.w400,
+                        ),
+                  ),
+                  Divider(
+                    color: Theme.of(context).hintColor,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: Dimensions.paddingSizeDefault,
+            ),
+            Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SizedBox(
-                          width: Dimensions.paddingSizeExtraSmall,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.paddingSizeExtraSmall),
-                          height: 30,
-                          child: Center(
-                            child: DropdownButton<String>(
-                              underline: Container(),
-                              hint: Text(
-                                "Select Item",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Theme.of(context).hintColor,
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                              value: widget.question.questionType,
-                              icon: Container(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  if (newValue != null) {
-                                    for (int i = 0;
-                                        i <
-                                            surveyController
-                                                .mysurvey.questions!.length;
-                                        i++) {
-                                      if (surveyController
-                                              .mysurvey.questions![i].id ==
-                                          widget.question.id) {
-                                        surveyController.mysurvey.questions![i]
-                                            .questionType = newValue;
-                                        break;
-                                      }
-                                    }
-                                  }
-                                });
-                              },
-                              items: <String>[
-                                'short_answer',
-                                'email',
-                                'long_answer',
-                                'number',
-                                'multiple_choice',
-                                'multiple_choice_grid',
-                                'checkboxes',
-                                'checkboxe_grid',
-                                'dropdown',
-                                'linear_scale',
-                                'star_rating',
-                                'smile',
-                                'date',
-                                'time',
-                                'file_upload',
-                                'add_section'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: SizedBox(
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.menu,
-                                          size: 16,
-                                          color: Theme.of(context).hintColor,
-                                        ),
-                                        SizedBox(
-                                          width:
-                                              Dimensions.paddingSizeExtraSmall,
-                                        ),
-                                        Text(
-                                          value,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.isrequired = !widget.isrequired;
-                          });
-                        },
-                        child: AnimatedContainer(
-                          duration: const Duration(milliseconds: 300),
-                          height: 15,
-                          width: 15,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: widget.isrequired
-                                ? Theme.of(context).primaryColor
-                                : AppConstants.color2,
-                            border: Border.all(
-                              width: 0.1,
-                              color: Theme.of(context).dividerColor,
-                            ),
-                          ),
-                          child: widget.isrequired
-                              ? const Center(
-                                  child: Icon(
-                                    Icons.done,
-                                    color: AppConstants.color2,
-                                    size: 12,
-                                  ),
-                                )
-                              : null,
-                        ),
+                      const Icon(
+                        Icons.list,
+                        size: 16,
                       ),
                       SizedBox(
                         width: Dimensions.paddingSizeExtraSmall,
                       ),
                       Text(
-                        "Required",
+                        widget.question.questionType,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).hintColor,
-                            fontSize: 8,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w400,
+                            color: Theme.of(context).hintColor),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.copy,
+                        size: 24,
+                      ),
+                      SizedBox(
+                        width: Dimensions.paddingSizeDefault,
+                      ),
+                      const Icon(
+                        Icons.delete,
+                        size: 24,
+                      ),
+                      SizedBox(
+                        width: Dimensions.paddingSizeDefault,
+                      ),
+                      Text(
+                        "Required",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w400,
+                            ),
                       ),
                       SizedBox(
                         width: Dimensions.paddingSizeSmall,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          _showConfirmationDialog(
-                            context,
-                            'Are you sure you want to delete this item?',
-                            () => surveyController.deleteQuestion(
-                                questionid: widget.question.id),
-                          );
+                      CustomSwitch(
+                        value: false,
+                        onChanged: (value) {
+                          setState(() {});
                         },
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.delete,
-                              size: 16,
-                              color: Theme.of(context).hintColor,
-                            ),
-                            SizedBox(
-                              width: Dimensions.paddingSizeExtraSmall,
-                            ),
-                            Text(
-                              "Delete",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(
-                                      color: Theme.of(context).hintColor,
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
+                        activeColor: Theme.of(context).primaryColor,
+                        backgroundColor: Theme.of(context).disabledColor,
+                        width: 35.0,
+                        height: 20.0,
+                        padding:
+                            EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: Dimensions.paddingSizeSmall,
-                  ),
-                  Text(
-                    "Question title",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: Dimensions.paddingSizeSmall,
-                  ),
-                  CustomTextField(
-                    controller: title,
-                    hintText: "title",
-                    fillColor: Colors.transparent,
-                    onChanged: ( value) {
-                     
-                      setState(() {
-                        if (surveyController.mysurvey.questions != null) {
-                          for (int i = 0;
-                              i < surveyController.mysurvey.questions!.length;
-                              i++) {
-                            if (surveyController.mysurvey.questions![i].id ==
-                                widget.question.id) {
-                              surveyController.mysurvey.questions?[i].question =
-                                  value;
-                              // surveyController.mysurvey.questions?[i].answers
-                              //     .add(value);
-                              break;
-                            }
-                          }
-                        }
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: Dimensions.paddingSizeSmall,
-                  ),
-                  Text(
-                    "Description",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: Dimensions.paddingSizeSmall,
-                  ),
-                  CustomTextField(
-                    controller: description,
-                    hintText: "Description",
-                    fillColor: Colors.transparent,
-                    onChanged: (value) {
-                     
-                      if (surveyController.mysurvey.questions != null) {
-                        for (int i = 0;
-                            i < surveyController.mysurvey.questions!.length;
-                            i++) {
-                          if (surveyController.mysurvey.questions![i].id ==
-                              widget.question.id) {
-                            surveyController
-                                .mysurvey.questions?[i].description = value;
-                            // surveyController.mysurvey.questions?[i].answers
-                            //     .add(value);
-                            break;
-                          }
-                        }
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: Dimensions.paddingSizeSmall,
-                  ),
-                  (widget.question.questionType == 'short_answer' ||
-                          widget.question.questionType == 'short_answer')
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Max Characters",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(fontWeight: FontWeight.w400),
-                            ),
-                            SizedBox(
-                              height: Dimensions.paddingSizeSmall,
-                            ),
-                            CustomTextField(
-                              inputType: TextInputType.phone,
-                              controller: TextEditingController(),
-                              hintText: "max characters",
-                              fillColor: Colors.transparent,
-                            ),
-                          ],
-                        )
-                      : Container(),
-                  (widget.question.questionType == 'multiple_choice' ||
-                          widget.question.questionType ==
-                              'multiple_choice_grid' ||
-                          widget.question.questionType == 'dropdown')
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: Dimensions.paddingSizeSmall,
-                            ),
-                            Text(
-                              "Answers",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(fontWeight: FontWeight.w400),
-                            ),
-                            Column(
-                              children: widget.question.answers
-                                  .asMap()
-                                  .entries
-                                  .map((answer) {
-                                for (var _ in widget.question.answers) {
-                                  widget.answercontrollers.add(
-                                    TextEditingController(),
-                                  );
-                                }
+            )
+            // Container(
+            //   padding: EdgeInsets.all(Dimensions.paddingSizeSmall),
+            //   decoration: BoxDecoration(
+            //       border: Border(
+            //           bottom: BorderSide(
+            //               width: 0.25, color: Theme.of(context).dividerColor))),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Container(
+            //         padding: EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //           children: [
+            //             SizedBox(
+            //               width: Dimensions.paddingSizeExtraSmall,
+            //             ),
+            //             Container(
+            //               padding: EdgeInsets.symmetric(
+            //                   horizontal: Dimensions.paddingSizeExtraSmall),
+            //               height: 30,
+            //               child: Center(
+            //                 child: DropdownButton<String>(
+            //                   underline: Container(),
+            //                   hint: Text(
+            //                     "Select Item",
+            //                     style: Theme.of(context)
+            //                         .textTheme
+            //                         .bodyLarge
+            //                         ?.copyWith(
+            //                           color: Theme.of(context).hintColor,
+            //                           fontSize: 8,
+            //                           fontWeight: FontWeight.w500,
+            //                         ),
+            //                   ),
+            //                   value: widget.question.questionType,
+            //                   icon: Container(),
+            //                   onChanged: (String? newValue) {
+            //                     setState(() {
+            //                       if (newValue != null) {
+            //                         for (int i = 0;
+            //                             i <
+            //                                 surveyController
+            //                                     .mysurvey.questions!.length;
+            //                             i++) {
+            //                           if (surveyController
+            //                                   .mysurvey.questions![i].id ==
+            //                               widget.question.id) {
+            //                             surveyController.mysurvey.questions![i]
+            //                                 .questionType = newValue;
+            //                             break;
+            //                           }
+            //                         }
+            //                       }
+            //                     });
+            //                   },
+            //                   items: <String>[
+            //                     'short_answer',
+            //                     'email',
+            //                     'long_answer',
+            //                     'number',
+            //                     'multiple_choice',
+            //                     'multiple_choice_grid',
+            //                     'checkboxes',
+            //                     'checkboxe_grid',
+            //                     'dropdown',
+            //                     'linear_scale',
+            //                     'star_rating',
+            //                     'smile',
+            //                     'date',
+            //                     'time',
+            //                     'file_upload',
+            //                     'add_section'
+            //                   ].map<DropdownMenuItem<String>>((String value) {
+            //                     return DropdownMenuItem<String>(
+            //                       value: value,
+            //                       child: SizedBox(
+            //                         child: Row(
+            //                           children: [
+            //                             Icon(
+            //                               Icons.menu,
+            //                               size: 16,
+            //                               color: Theme.of(context).hintColor,
+            //                             ),
+            //                             SizedBox(
+            //                               width:
+            //                                   Dimensions.paddingSizeExtraSmall,
+            //                             ),
+            //                             Text(
+            //                               value,
+            //                               style: Theme.of(context)
+            //                                   .textTheme
+            //                                   .labelMedium
+            //                                   ?.copyWith(
+            //                                     color:
+            //                                         Theme.of(context).hintColor,
+            //                                     fontWeight: FontWeight.w400,
+            //                                   ),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                       ),
+            //                     );
+            //                   }).toList(),
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       Row(
+            //         children: [
+            //           GestureDetector(
+            //             onTap: () {
+            //               setState(() {
+            //                 widget.isrequired = !widget.isrequired;
+            //               });
+            //             },
+            //             child: AnimatedContainer(
+            //               duration: const Duration(milliseconds: 300),
+            //               height: 15,
+            //               width: 15,
+            //               decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(5),
+            //                 color: widget.isrequired
+            //                     ? Theme.of(context).primaryColor
+            //                     : AppConstants.color2,
+            //                 border: Border.all(
+            //                   width: 0.1,
+            //                   color: Theme.of(context).dividerColor,
+            //                 ),
+            //               ),
+            //               child: widget.isrequired
+            //                   ? const Center(
+            //                       child: Icon(
+            //                         Icons.done,
+            //                         color: AppConstants.color2,
+            //                         size: 12,
+            //                       ),
+            //                     )
+            //                   : null,
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             width: Dimensions.paddingSizeExtraSmall,
+            //           ),
+            //           Text(
+            //             "Required",
+            //             style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            //                 color: Theme.of(context).hintColor,
+            //                 fontSize: 8,
+            //                 fontWeight: FontWeight.w500),
+            //           ),
+            //           SizedBox(
+            //             width: Dimensions.paddingSizeSmall,
+            //           ),
+            //           GestureDetector(
+            //             onTap: () {
+            //               _showConfirmationDialog(
+            //                 context,
+            //                 'Are you sure you want to delete this item?',
+            //                 () => surveyController.deleteQuestion(
+            //                     questionid: widget.question.id),
+            //               );
+            //             },
+            //             child: Row(
+            //               children: [
+            //                 Icon(
+            //                   Icons.delete,
+            //                   size: 16,
+            //                   color: Theme.of(context).hintColor,
+            //                 ),
+            //                 SizedBox(
+            //                   width: Dimensions.paddingSizeExtraSmall,
+            //                 ),
+            //                 Text(
+            //                   "Delete",
+            //                   style: Theme.of(context)
+            //                       .textTheme
+            //                       .bodySmall
+            //                       ?.copyWith(
+            //                           color: Theme.of(context).hintColor,
+            //                           fontSize: 8,
+            //                           fontWeight: FontWeight.w500),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Padding(
+            //   padding: EdgeInsets.all(Dimensions.paddingSizeDefault),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       SizedBox(
+            //         height: Dimensions.paddingSizeSmall,
+            //       ),
+            //       Text(
+            //         "Question title",
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .labelMedium
+            //             ?.copyWith(fontWeight: FontWeight.w400),
+            //       ),
+            //       SizedBox(
+            //         height: Dimensions.paddingSizeSmall,
+            //       ),
+            //       CustomTextField(
+            //         controller: title,
+            //         hintText: "title",
+            //         fillColor: Colors.transparent,
+            //         onChanged: ( value) {
 
-                                return SizedBox(
-                                  width: Get.width,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: Dimensions.paddingSizeDefault,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Icon(
-                                            Icons.grain_rounded,
-                                            color: Theme.of(context).hintColor,
-                                            size: 16,
-                                          ),
-                                          SizedBox(
-                                            width: Dimensions
-                                                .paddingSizeExtraSmall,
-                                          ),
-                                          Expanded(
-                                            child: CustomTextField(
-                                              controller:
-                                                  widget.answercontrollers[
-                                                      answer.key],
-                                              hintText: answer.value,
-                                              fillColor: Colors.transparent,
-                                              onChanged: (String value) {
-                                                //  answercontrollers[answer.key] = value;
-                                                // questions[question.id].answers.add(
-                                                //     answercontrollers[answer.key]
-                                                //         .text);
-                                              },
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: Dimensions.paddingSizeSmall,
-                                          ),
-                                          AnimatedContainer(
-                                            duration:
-                                                const Duration(milliseconds: 200),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                // _deleteAnswer(
-                                                //     questionid: question.id,
-                                                //     answerid: answer.key);
-                                              },
-                                              child: Icon(
-                                                Icons.delete,
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                                size: 16,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                            SizedBox(
-                              height: Dimensions.paddingSizeSmall,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // _addAnswer(
-                                //     questionid: question.id,
-                                //     answer: "Add answer");
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.add,
-                                    color: AppConstants.color10,
-                                    size: 16,
-                                  ),
-                                  Text(
-                                    "Add answer",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium
-                                        ?.copyWith(
-                                            color: AppConstants.color10,
-                                            fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container()
-                ],
-              ),
-            ),
+            //           setState(() {
+            //             if (surveyController.mysurvey.questions != null) {
+            //               for (int i = 0;
+            //                   i < surveyController.mysurvey.questions!.length;
+            //                   i++) {
+            //                 if (surveyController.mysurvey.questions![i].id ==
+            //                     widget.question.id) {
+            //                   surveyController.mysurvey.questions?[i].question =
+            //                       value;
+            //                   // surveyController.mysurvey.questions?[i].answers
+            //                   //     .add(value);
+            //                   break;
+            //                 }
+            //               }
+            //             }
+            //           });
+            //         },
+            //       ),
+            //       SizedBox(
+            //         height: Dimensions.paddingSizeSmall,
+            //       ),
+            //       Text(
+            //         "Description",
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .labelMedium
+            //             ?.copyWith(fontWeight: FontWeight.w400),
+            //       ),
+            //       SizedBox(
+            //         height: Dimensions.paddingSizeSmall,
+            //       ),
+            //       CustomTextField(
+            //         controller: description,
+            //         hintText: "Description",
+            //         fillColor: Colors.transparent,
+            //         onChanged: (value) {
+
+            //           if (surveyController.mysurvey.questions != null) {
+            //             for (int i = 0;
+            //                 i < surveyController.mysurvey.questions!.length;
+            //                 i++) {
+            //               if (surveyController.mysurvey.questions![i].id ==
+            //                   widget.question.id) {
+            //                 surveyController
+            //                     .mysurvey.questions?[i].description = value;
+            //                 // surveyController.mysurvey.questions?[i].answers
+            //                 //     .add(value);
+            //                 break;
+            //               }
+            //             }
+            //           }
+            //         },
+            //       ),
+            //       SizedBox(
+            //         height: Dimensions.paddingSizeSmall,
+            //       ),
+            //       (widget.question.questionType == 'short_answer' ||
+            //               widget.question.questionType == 'short_answer')
+            //           ? Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text(
+            //                   "Max Characters",
+            //                   style: Theme.of(context)
+            //                       .textTheme
+            //                       .labelMedium
+            //                       ?.copyWith(fontWeight: FontWeight.w400),
+            //                 ),
+            //                 SizedBox(
+            //                   height: Dimensions.paddingSizeSmall,
+            //                 ),
+            //                 CustomTextField(
+            //                   inputType: TextInputType.phone,
+            //                   controller: TextEditingController(),
+            //                   hintText: "max characters",
+            //                   fillColor: Colors.transparent,
+            //                 ),
+            //               ],
+            //             )
+            //           : Container(),
+            //       (widget.question.questionType == 'multiple_choice' ||
+            //               widget.question.questionType ==
+            //                   'multiple_choice_grid' ||
+            //               widget.question.questionType == 'dropdown')
+            //           ? Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 SizedBox(
+            //                   height: Dimensions.paddingSizeSmall,
+            //                 ),
+            //                 Text(
+            //                   "Answers",
+            //                   style: Theme.of(context)
+            //                       .textTheme
+            //                       .labelMedium
+            //                       ?.copyWith(fontWeight: FontWeight.w400),
+            //                 ),
+            //                 Column(
+            //                   children: widget.question.answers
+            //                       .asMap()
+            //                       .entries
+            //                       .map((answer) {
+            //                     for (var _ in widget.question.answers) {
+            //                       // widget.answercontrollers.add(
+            //                       //   TextEditingController(),
+            //                       // );
+            //                     }
+
+            //                     return SizedBox(
+            //                       width: Get.width,
+            //                       child: Column(
+            //                         children: [
+            //                           SizedBox(
+            //                             height: Dimensions.paddingSizeDefault,
+            //                           ),
+            //                           Row(
+            //                             mainAxisAlignment:
+            //                                 MainAxisAlignment.spaceBetween,
+            //                             children: [
+            //                               Icon(
+            //                                 Icons.grain_rounded,
+            //                                 color: Theme.of(context).hintColor,
+            //                                 size: 16,
+            //                               ),
+            //                               SizedBox(
+            //                                 width: Dimensions
+            //                                     .paddingSizeExtraSmall,
+            //                               ),
+            //                               // Expanded(
+            //                               //   child: CustomTextField(
+            //                               //     controller:
+            //                               //         widget.answercontrollers[
+            //                               //             answer.key],
+            //                               //     hintText: answer.value,
+            //                               //     fillColor: Colors.transparent,
+            //                               //     onChanged: (String value) {
+            //                               //       //  answercontrollers[answer.key] = value;
+            //                               //       // questions[question.id].answers.add(
+            //                               //       //     answercontrollers[answer.key]
+            //                               //       //         .text);
+            //                               //     },
+            //                               //   ),
+            //                               // ),
+            //                               SizedBox(
+            //                                 width: Dimensions.paddingSizeSmall,
+            //                               ),
+            //                               AnimatedContainer(
+            //                                 duration:
+            //                                     const Duration(milliseconds: 200),
+            //                                 child: GestureDetector(
+            //                                   onTap: () {
+            //                                     // _deleteAnswer(
+            //                                     //     questionid: question.id,
+            //                                     //     answerid: answer.key);
+            //                                   },
+            //                                   child: Icon(
+            //                                     Icons.delete,
+            //                                     color:
+            //                                         Theme.of(context).hintColor,
+            //                                     size: 16,
+            //                                   ),
+            //                                 ),
+            //                               ),
+            //                             ],
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     );
+            //                   }).toList(),
+            //                 ),
+            //                 SizedBox(
+            //                   height: Dimensions.paddingSizeSmall,
+            //                 ),
+            //                 GestureDetector(
+            //                   onTap: () {
+            //                     // _addAnswer(
+            //                     //     questionid: question.id,
+            //                     //     answer: "Add answer");
+            //                   },
+            //                   child: Row(
+            //                     children: [
+            //                       const Icon(
+            //                         Icons.add,
+            //                         color: AppConstants.color10,
+            //                         size: 16,
+            //                       ),
+            //                       Text(
+            //                         "Add answer",
+            //                         style: Theme.of(context)
+            //                             .textTheme
+            //                             .labelMedium
+            //                             ?.copyWith(
+            //                                 color: AppConstants.color10,
+            //                                 fontWeight: FontWeight.w400),
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ],
+            //             )
+            //           : Container()
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       );
